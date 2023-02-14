@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 
+type Article = {
+  title: string;
+  text: string;
+};
+
 export const Article = () => {
-  const [article, setArticle] = useState({});
+  const [article, setArticle] = useState<Article | null>(null);
 
   useEffect(() => {
     async function fetchArticle() {
-      const data = {
+      const data: Article = {
         title: "Learning Next.js",
         text: "Next.js enables you to create full-stack web applications by extending the latest React features, and integrating powerful Rust-based JavaScript tooling for the fastest builds.",
       };
@@ -15,16 +20,20 @@ export const Article = () => {
         setTimeout(() => {
           return resolve(data);
         }, 2000)
-      ).then((res) => setArticle(res));
+      ).then((res: Article) => setArticle(res));
     }
 
     fetchArticle();
   }, []);
 
   return (
-    <div>
-      <h2>{article.title}</h2>
-      <p>{article.text}</p>
-    </div>
+    <>
+      {article && (
+        <div>
+          <h2>{article.title}</h2>
+          <p>{article.text}</p>
+        </div>
+      )}
+    </>
   );
 };
