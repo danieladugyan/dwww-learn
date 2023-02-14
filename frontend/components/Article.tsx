@@ -10,17 +10,10 @@ export const Article = () => {
 
   useEffect(() => {
     async function fetchArticle() {
-      const data: Article = {
-        title: "Learning Next.js",
-        text: "Next.js enables you to create full-stack web applications by extending the latest React features, and integrating powerful Rust-based JavaScript tooling for the fastest builds.",
-      };
-
-      // simulate network delay
-      new Promise((resolve) =>
-        setTimeout(() => {
-          return resolve(data);
-        }, 2000)
-      ).then((res: Article) => setArticle(res));
+      fetch("http://localhost:4000/article")
+        .then((response) => response.json())
+        .then((data: Article) => setArticle(data))
+        .catch((e) => console.error(e));
     }
 
     fetchArticle();
